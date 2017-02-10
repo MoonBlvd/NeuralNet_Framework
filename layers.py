@@ -50,13 +50,20 @@ class cross_entropy:
 
     def forward(self, fx, y):
         loss = 0;
+        #print "Fx is: ", fx
+        #print "y is: ", y
         for i in range(self.batch_size): 
             loss = loss - np.dot(y[i,:], np.log(fx[i,:].T))
+        #print "loss is: ", loss
         return loss
-
     def backward(self, fx, y):
         delta = np.zeros(fx.shape)
+        
         for i in range(self.batch_size):
-            delta[i, :] = - np.divide(y[i, :], fx[i, :])
+            delta[i, :] = - np.divide(y[i, :], np.maximum(fx[i, :], np.ones_like(fx[i,:]) * 1e-100))
         delta = delta / self.batch_size
+        
+        #print "delta shape is: ", delta.shape
+        #delta = abs(fx-y)
+        #print "new delta shape is: ", delta.shape
         return delta

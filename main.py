@@ -35,8 +35,10 @@ if __name__ == "__main__":
     # make up the trainig set
     xTrain = np.concatenate((trainSet0, trainSet1),axis = 0) / 255 # normalize to 0-1
     yTrain = np.concatenate((np.zeros([trainSet0.shape[0],1]), np.ones([trainSet1.shape[0],1])), axis = 0) # labels
+    labelTrain = yTrain
     tmp = np.concatenate((np.ones([trainSet0.shape[0],1]), np.zeros([trainSet1.shape[0],1])), axis = 0)  # tmp vector
     yTrain = np.concatenate((tmp, yTrain), axis = 1)
+
  
     # make up the testing set
     xTest = np.concatenate((testSet0, testSet1),axis = 0) / 255 # normalize to 0-1
@@ -57,6 +59,6 @@ if __name__ == "__main__":
     # Start to train
    
     net = FCnets(numIter, train_batch_size, test_batch_size)
-    w_FC1, b_FC1, w_FC2, b_FC2 = net.train(xTrain, yTrain)
+    w_FC1, b_FC1, w_FC2, b_FC2 = net.train(xTrain, yTrain, labelTrain)
 #    prediction = net.test(xTest, yTest)
 
