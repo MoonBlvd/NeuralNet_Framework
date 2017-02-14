@@ -29,6 +29,8 @@ class FCnets:
             #forward propagation
             out1 = self.FClayer1.forward(X)
             out2 = self.FClayer2.forward(out1)
+            out2 = np.exp(out2) #exponential score 
+            out2 = out2/np.sum(out2, axis = 1)
             #print out1[1]
             #print out2[1]
             loss = self.trainXEnt.forward(out2, y)
